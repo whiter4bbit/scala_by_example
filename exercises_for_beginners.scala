@@ -67,7 +67,15 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1 mark
   // Total: 7
-  def append[A](x: List[A], y: List[A]): List[A] = error("todo")
+  def append[A](x: List[A], y: List[A]): List[A] = x match {
+	case Nil => y
+	case _ => x.head::append(x.tail, y)
+  }
+
+  def concat_[A](x: List[List[A]], l: List[A]): List[A] = x match {
+	case Nil => l
+	case _ => concat_(x.tail, append(l, x.head))
+  }
 
   // Exercise 7
   // Relative Difficulty: 5
@@ -75,7 +83,7 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1 mark
   // Total: 7
-  def concat[A](x: List[List[A]]): List[A] = error("todo")
+  def concat[A](x: List[List[A]]): List[A] = concat_(x, Nil)
 
   // Exercise 8
   // Relative Difficulty: 7
