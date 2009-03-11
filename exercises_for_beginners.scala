@@ -24,13 +24,15 @@ object Exercises {
   // Total: 3
   def add(x: Int, y: Int): Int = if(y>0) add(succ(x),pred(y)) else x
 
+  def sum_(l: List[Int], sum: Int): Int = if (l!= Nil) sum_(l.tail, add(sum,l.head)) else sum
+
   // Exercise 2
   // Relative Difficulty: 2
   // Correctness: 2.5 marks
   // Performance: 1 mark
   // Elegance: 0.5 marks
   // Total: 4
-  def sum(x: List[Int]): Int = error("todo")
+  def sum(x: List[Int]): Int = sum_(x,0)
 
   // Exercise 3
   // Relative Difficulty: 2
@@ -38,7 +40,8 @@ object Exercises {
   // Performance: 1 mark
   // Elegance: 0.5 marks
   // Total: 4
-  def length[A](x: List[A]): Int = error("todo")
+  def length[A](x: List[A]): Int = if (x!=Nil) length(x.tail)+1 else 0
+  
 
   // Exercise 4
   // Relative Difficulty: 5
@@ -46,7 +49,7 @@ object Exercises {
   // Performance: 1.0 mark
   // Elegance: 1.5 marks
   // Total: 7
-  def map[A, B](x: List[A], f: A => B): List[B] = error("todo")
+  def map[A, B](x: List[A], f: A => B): List[B] = if(x!=Nil) f(x.head)::map(x.tail,f) else Nil
 
   // Exercise 5
   // Relative Difficulty: 5
@@ -54,7 +57,9 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1 mark
   // Total: 7
-  def filter[A](x: List[A], f: A => Boolean): List[A] = error("todo")
+  def filter[A](x: List[A], f: A => Boolean): List[A] = if(x!=Nil){
+	 if(f(x.head)) x.head::filter(x.tail, f) else filter(x.tail, f)
+  } else Nil
 
   // Exercise 6
   // Relative Difficulty: 5
