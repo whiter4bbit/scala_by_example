@@ -91,15 +91,25 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1.5 mark
   // Total: 8
-  def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = error("todo")
+  def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = concat(x map f)
   
+  def max_(x: List[Int], current: Int): Int = x match {
+    case Nil => current
+    case _ => if(x.head>current) max_(x.tail, x.head) else max_(x.tail, current)
+  }  
+
   // Exercise 9
   // Relative Difficulty: 8
   // Correctness: 3.5 marks
   // Performance: 3.0 marks
   // Elegance: 2.5 marks
   // Total: 9
-  def maximum(x: List[Int]): Int = error("todo")
+  def maximum(x: List[Int]): Int = max_(x, x.head)
+
+  def reverse_[A](x: List[A], c: List[A]): List[A] = x match {
+      case Nil => c
+      case _ => reverse_(x.tail, append(c, x.head::Nil))
+  }
 
   // Exercise 10
   // Relative Difficulty: 10
@@ -107,5 +117,5 @@ object Exercises {
   // Performance: 2.5 marks
   // Elegance: 2.5 marks
   // Total: 10
-  def reverse[A](x: List[A]): List[A] = error("todo")
+  def reverse[A](x: List[A]): List[A] = reverse_(x, Nil)
 }
