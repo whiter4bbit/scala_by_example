@@ -22,9 +22,10 @@ object Exercises {
   // Performance: 0.5 mark
   // Elegance: 0.5 marks
   // Total: 3
-  def add(x: Int, y: Int): Int = if(y>0) add(succ(x),pred(y)) else x
-
-  def sum_(l: List[Int], sum: Int): Int = if (l!= Nil) sum_(l.tail, add(sum,l.head)) else sum
+  def add(x: Int, y: Int): Int = y match {
+    case 0 => x
+    case _ => add(succ(x), pred(y))
+  }
 
   // Exercise 2
   // Relative Difficulty: 2
@@ -32,7 +33,10 @@ object Exercises {
   // Performance: 1 mark
   // Elegance: 0.5 marks
   // Total: 4
-  def sum(x: List[Int]): Int = sum_(x,0)
+  def sum(x: List[Int]): Int = x match {
+    case Nil => 0
+    case _ => add(x.head,sum(x.tail))
+  }
 
   // Exercise 3
   // Relative Difficulty: 2
@@ -40,7 +44,10 @@ object Exercises {
   // Performance: 1 mark
   // Elegance: 0.5 marks
   // Total: 4
-  def length[A](x: List[A]): Int = if (x!=Nil) length(x.tail)+1 else 0
+  def length[A](x: List[A]): Int = x match {
+    case Nil => 0
+    case _ => add(1,length(x.tail))
+  }
   
 
   // Exercise 4
@@ -49,7 +56,10 @@ object Exercises {
   // Performance: 1.0 mark
   // Elegance: 1.5 marks
   // Total: 7
-  def map[A, B](x: List[A], f: A => B): List[B] = if(x!=Nil) f(x.head)::map(x.tail,f) else Nil
+  def map[A, B](x: List[A], f: A => B): List[B] = x match {
+    case Nil => Nil
+    case _ => f(x.head)::map(x.tail,f)
+  }
 
   // Exercise 5
   // Relative Difficulty: 5
@@ -57,9 +67,10 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1 mark
   // Total: 7
-  def filter[A](x: List[A], f: A => Boolean): List[A] = if(x!=Nil){
-	 if(f(x.head)) x.head::filter(x.tail, f) else filter(x.tail, f)
-  } else Nil
+  def filter[A](x: List[A], f: A => Boolean): List[A] = x match {
+    case Nil => Nil
+    case _ => if(f(x.head)) x.head::filter(x.tail, f) else filter(x.tail, f)
+  }
 
   // Exercise 6
   // Relative Difficulty: 5
@@ -93,18 +104,20 @@ object Exercises {
   // Total: 8
   def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = concat(x map f)
   
-  def max_(x: List[Int], current: Int): Int = x match {
-    case Nil => current
-    case _ => if(x.head>current) max_(x.tail, x.head) else max_(x.tail, current)
-  }  
-
   // Exercise 9
   // Relative Difficulty: 8
   // Correctness: 3.5 marks
   // Performance: 3.0 marks
   // Elegance: 2.5 marks
   // Total: 9
-  def maximum(x: List[Int]): Int = max_(x, x.head)
+
+  def maximum(x: List[Int]): Int = x match {
+      case Nil => error("wanted list[Int]")
+      case e::ed => ed match {
+		       case Nil => e
+		       case _ => if(e>ed.head) maximum(e::ed.tail) else maximum(ed)
+		    }
+  }
 
   def reverse_[A](x: List[A], c: List[A]): List[A] = x match {
       case Nil => c
