@@ -113,15 +113,13 @@ object Exercises {
 
   def maximum(x: List[Int]): Int = x match {
       case Nil => error("wanted list[Int]")
-      case e::ed => ed match {
-		       case Nil => e
-		       case _ => if(e>ed.head) maximum(e::ed.tail) else maximum(ed)
-		    }
+      case e :: Nil => e
+      case e :: ed => if(e>ed.head) maximum(e::ed.tail) else maximum(ed)
   }
 
   def reverse_[A](x: List[A], c: List[A]): List[A] = x match {
       case Nil => c
-      case _ => reverse_(x.tail, append(c, x.head::Nil))
+      case _ => reverse_(x.tail, append(x.head::Nil,c))
   }
 
   // Exercise 10
